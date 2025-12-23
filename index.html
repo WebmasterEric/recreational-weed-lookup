@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recreational Weed Lookup (21+)</title>
+  <meta name="description" content="Recreational weed and marijuana strain lookup utility. Information only. Adults 21+. No sales, no delivery." />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #111;
+    }
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+    p {
+      line-height: 1.5;
+      color: #333;
+    }
+    .lookup-box {
+      border: 1px solid #e6e6e6;
+      background: #fafafa;
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 16px;
+    }
+    input[type="search"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 16px;
+      display: grid;
+      gap: 12px;
+    }
+    li {
+      border: 1px solid #eee;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fff;
+    }
+    a {
+      color: #111;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    footer {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Recreational Weed Lookup (21+)</h1>
+
+    <p>
+      A simple, city-focused lookup utility for recreational cannabis strain information.
+      This demo shows how strain discovery can be handled without menus, ordering, or sales.
+    </p>
+
+    <div class="lookup-box">
+      <label for="search">Search a strain</label><br><br>
+      <input id="search" type="search" placeholder="Type a strain name (e.g., Gelato)" autocomplete="off" />
+    </div>
+
+    <ul id="results"></ul>
+
+    <footer>
+      Recreational cannabis information only. Adults 21+. No sales. No delivery.
+    </footer>
+  </main>
+
+  <script>
+    const STRAINS = [
+      { name: "Gelato", url: "#" },
+      { name: "Wedding Cake", url: "#" },
+      { name: "Runtz", url: "#" },
+      { name: "Blue Dream", url: "#" },
+      { name: "Sour Diesel", url: "#" }
+    ];
+
+    const input = document.getElementById("search");
+    const results = document.getElementById("results");
+
+    function normalize(text) {
+      return text.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    }
+
+    function render(list) {
+      results.innerHTML = list.map(item =>
+        `<li><a href="${item.url}">${item.name}</a></li>`
+      ).join("");
+    }
+
+    input.addEventListener("input", () => {
+      const q = normalize(input.value);
+      if (!q) return render(STRAINS);
+      render(STRAINS.filter(s => normalize(s.name).includes(q)));
+    });
+
+    render(STRAINS);
+  </script>
+</body>
+</html>
