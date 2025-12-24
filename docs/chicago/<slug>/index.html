@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chicago Recreational Weed Lookup (21+)</title>
+  <meta name="description" content="Info-only recreational strain lookup for Chicago, IL. No sales. No delivery." />
+  <meta name="robots" content="index,follow" />
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f6f7f8;color:#111}
+    .wrap{max-width:920px;margin:0 auto;padding:18px}
+    .card{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:16px}
+    input{width:100%;padding:12px;border:1px solid #e8e8e8;border-radius:12px;font-size:1rem;margin-top:10px}
+    ul{list-style:none;padding:0;margin:14px 0;display:grid;gap:10px}
+    li{border:1px solid #e8e8e8;border-radius:14px;background:#fff;padding:14px}
+    a{color:#111;text-decoration:none;font-weight:900}
+    .fine{color:#666;font-size:.95rem;line-height:1.4}
+    .pillbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .pill{border:1px solid #e8e8e8;background:#fafafa;border-radius:999px;padding:7px 10px;font-size:.9rem;color:#666}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1 style="margin:0 0 8px 0;">Chicago Recreational Weed Lookup (21+)</h1>
+      <p class="fine" style="margin:0;">
+        Info-only strain lookup for Chicago, IL. No sales. No ordering. No delivery.
+      </p>
+
+      <div class="pillbar">
+        <span class="pill">Recreational only</span>
+        <span class="pill">Information only</span>
+        <span class="pill">Adults 21+</span>
+      </div>
+
+      <input id="q" type="search" placeholder="Search a strain (e.g., Gelato)" autocomplete="off" />
+      <p class="fine" style="margin:10px 0 0 0;"><span id="n">0</span> results</p>
+    </div>
+
+    <ul id="list"></ul>
+
+    <p class="fine">
+      Recreational cannabis information only. Adults 21+. No sales. No delivery.
+      <br />
+      <a href="https://store.webmastereric.com/product/strain-availability-confirmation/">Confirm Availability ($5)</a>
+    </p>
+  </div>
+
+  <script>
+    // 20 popular recreational strain searches (starter pack)
+    const STRAINS = [
+      { name: "Gelato", url: "./chicago/gelato/" },
+      { name: "Runtz", url: "./chicago/runtz/" },
+      { name: "Wedding Cake", url: "./chicago/wedding-cake/" },
+      { name: "Blue Dream", url: "./chicago/blue-dream/" },
+      { name: "Sour Diesel", url: "./chicago/sour-diesel/" },
+      { name: "OG Kush", url: "./chicago/og-kush/" },
+      { name: "Girl Scout Cookies", url: "./chicago/girl-scout-cookies/" },
+      { name: "Gorilla Glue", url: "./chicago/gorilla-glue/" },
+      { name: "Granddaddy Purple", url: "./chicago/granddaddy-purple/" },
+      { name: "Pineapple Express", url: "./chicago/pineapple-express/" },
+      { name: "Jack Herer", url: "./chicago/jack-herer/" },
+      { name: "White Widow", url: "./chicago/white-widow/" },
+      { name: "Zkittlez", url: "./chicago/zkittlez/" },
+      { name: "MAC 1", url: "./chicago/mac-1/" },
+      { name: "Do-Si-Dos", url: "./chicago/do-si-dos/" },
+      { name: "Biscotti", url: "./chicago/biscotti/" },
+      { name: "Slurricane", url: "./chicago/slurricane/" },
+      { name: "Purple Punch", url: "./chicago/purple-punch/" },
+      { name: "RS11", url: "./chicago/rs11/" },
+      { name: "Animal Mints", url: "./chicago/animal-mints/" }
+    ];
+
+    const list = document.getElementById("list");
+    const q = document.getElementById("q");
+    const n = document.getElementById("n");
+
+    const esc = s => String(s||"").replace(/[&<>"']/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));
+    const norm = s => String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+
+    function render(items){
+      list.innerHTML = items.map(x => `
+        <li>
+          <a href="${esc(x.url)}">${esc(x.name)} Strain in Chicago, IL</a>
+          <div class="fine">Recreational info • listings change fast</div>
+        </li>
+      `).join("");
+      n.textContent = items.length;
+    }
+
+    q.addEventListener("input", () => {
+      const v = norm(q.value);
+      if(!v) return render(STRAINS);
+      render(STRAINS.filter(x => norm(x.name).includes(v)));
+    });
+
+    render(STRAINS);
+  </script>
+</body>
+</html>
